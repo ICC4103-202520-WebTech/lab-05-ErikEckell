@@ -1,3 +1,4 @@
+
 ## Objective
 Add basic controllers and views to display existing records. No create/edit functionality yet.
 
@@ -12,4 +13,3 @@ Add basic controllers and views to display existing records. No create/edit func
 ## Deliverables
 - Index and show pages for all main entities.
 - Navigation menu linking to each section.
-
