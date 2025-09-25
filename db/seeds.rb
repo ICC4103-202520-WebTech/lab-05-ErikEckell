@@ -1,13 +1,4 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
+# Reset data
 Invoice.destroy_all
 ServiceUsage.destroy_all
 Service.destroy_all
@@ -19,12 +10,12 @@ Room.destroy_all
 # ROOMS
 # ------------------------
 rooms = Room.create!([
-  { number: "101", room_type: 0, price: 50000, status: 0 }, # single
-  { number: "102", room_type: 1, price: 75000, status: 0 }, # double
-  { number: "201", room_type: 2, price: 120000, status: 1 }, # suite
-  { number: "202", room_type: 1, price: 80000, status: 0 }, # double
-  { number: "301", room_type: 2, price: 150000, status: 0 }, # suite
-  { number: "303", room_type: 0, price: 55000, status: 1 }  # single
+  { number: "101", room_type: 0, price: 50_000, status: 0 }, # single
+  { number: "102", room_type: 1, price: 75_000, status: 0 }, # double
+  { number: "201", room_type: 2, price: 120_000, status: 1 }, # suite
+  { number: "202", room_type: 1, price: 80_000, status: 0 }, # double
+  { number: "301", room_type: 2, price: 150_000, status: 0 }, # suite
+  { number: "303", room_type: 0, price: 55_000, status: 1 }  # single
 ])
 
 # ------------------------
@@ -40,41 +31,109 @@ guests = Guest.create!([
 # ------------------------
 # RESERVATIONS
 # ------------------------
-reservations = Reservation.create!([
-  { code: "RES-001", guest_id: guests[0].id, room_id: rooms[0].id, check_in: Date.today, check_out: Date.today + 2, status: 0, adults: 1, children: 0 },
-  { code: "RES-002", guest_id: guests[1].id, room_id: rooms[1].id, check_in: Date.today + 1, check_out: Date.today + 4, status: 1, adults: 2, children: 1 },
-  { code: "RES-003", guest_id: guests[2].id, room_id: rooms[3].id, check_in: Date.today + 2, check_out: Date.today + 5, status: 0, adults: 2, children: 0 },
-  { code: "RES-004", guest_id: guests[3].id, room_id: rooms[4].id, check_in: Date.today + 3, check_out: Date.today + 6, status: 0, adults: 1, children: 1 }
-])
+reservations = [
+  Reservation.create!(
+    code: "RES-001",
+    guest: guests[0],
+    room: rooms[0],
+    check_in: Date.today,
+    check_out: Date.today + 2,
+    status: 0,
+    adults: 1,
+    children: 0
+  ),
+  Reservation.create!(
+    code: "RES-002",
+    guest: guests[1],
+    room: rooms[1],
+    check_in: Date.today + 1,
+    check_out: Date.today + 4,
+    status: 1,
+    adults: 2,
+    children: 1
+  ),
+  Reservation.create!(
+    code: "RES-003",
+    guest: guests[2],
+    room: rooms[3],
+    check_in: Date.today + 2,
+    check_out: Date.today + 5,
+    status: 0,
+    adults: 2,
+    children: 0
+  ),
+  Reservation.create!(
+    code: "RES-004",
+    guest: guests[3],
+    room: rooms[4],
+    check_in: Date.today + 3,
+    check_out: Date.today + 6,
+    status: 0,
+    adults: 1,
+    children: 1
+  )
+]
 
 # ------------------------
 # SERVICES
 # ------------------------
 services = Service.create!([
-  { name: "Minibar", price: 8000, is_active: true },
-  { name: "Massage", price: 25000, is_active: true },
-  { name: "Laundry", price: 5000, is_active: true },
-  { name: "Room Cleaning", price: 10000, is_active: true },
-  { name: "Breakfast Buffet", price: 15000, is_active: true }
+  { name: "Minibar", price: 8_000, is_active: true },
+  { name: "Massage", price: 25_000, is_active: true },
+  { name: "Laundry", price: 5_000, is_active: true },
+  { name: "Room Cleaning", price: 10_000, is_active: true },
+  { name: "Breakfast Buffet", price: 15_000, is_active: true }
 ])
 
 # ------------------------
 # SERVICE USAGE
 # ------------------------
 ServiceUsage.create!([
-  { reservation_id: reservations[0].id, service_id: services[0].id, quantity_integer: 2, used_at: DateTime.now, note: "2 drinks from minibar" },
-  { reservation_id: reservations[0].id, service_id: services[2].id, quantity_integer: 1, used_at: DateTime.now, note: "Express laundry" },
-  { reservation_id: reservations[1].id, service_id: services[1].id, quantity_integer: 1, used_at: DateTime.now, note: "Relaxing massage" },
-  { reservation_id: reservations[2].id, service_id: services[3].id, quantity_integer: 1, used_at: DateTime.now, note: "Room cleaning service" },
-  { reservation_id: reservations[3].id, service_id: services[4].id, quantity_integer: 2, used_at: DateTime.now, note: "Buffet breakfast for 2" }
+  { reservation: reservations[0], service: services[0], quantity: 2, used_at: DateTime.now, note: "2 drinks from minibar" },
+  { reservation: reservations[0], service: services[2], quantity: 1, used_at: DateTime.now, note: "Express laundry" },
+  { reservation: reservations[1], service: services[1], quantity: 1, used_at: DateTime.now, note: "Relaxing massage" },
+  { reservation: reservations[2], service: services[3], quantity: 1, used_at: DateTime.now, note: "Room cleaning service" },
+  { reservation: reservations[3], service: services[4], quantity: 2, used_at: DateTime.now, note: "Buffet breakfast for 2" }
 ])
 
 # ------------------------
 # INVOICES
 # ------------------------
 Invoice.create!([
-  { reservation_id: reservations[0].id, nights_subtotal: 2 * rooms[0].price, services_subtotal: 21000, tax: 0.19 * (2 * rooms[0].price + 21000), total: (2 * rooms[0].price + 21000) * 1.19, issued_at: DateTime.now, status: "issued" },
-  { reservation_id: reservations[1].id, nights_subtotal: 3 * rooms[1].price, services_subtotal: 25000, tax: 0.19 * (3 * rooms[1].price + 25000), total: (3 * rooms[1].price + 25000) * 1.19, issued_at: DateTime.now, status: "draft" },
-  { reservation_id: reservations[2].id, nights_subtotal: 3 * rooms[3].price, services_subtotal: 10000, tax: 0.19 * (3 * rooms[3].price + 10000), total: (3 * rooms[3].price + 10000) * 1.19, issued_at: DateTime.now, status: "issued" },
-  { reservation_id: reservations[3].id, nights_subtotal: 3 * rooms[4].price, services_subtotal: 30000, tax: 0.19 * (3 * rooms[4].price + 30000), total: (3 * rooms[4].price + 30000) * 1.19, issued_at: DateTime.now, status: "draft" }
+  {
+    reservation: reservations[0],
+    nights_subtotal: 2 * rooms[0].price,
+    services_subtotal: 21_000,
+    tax: 0.19 * (2 * rooms[0].price + 21_000),
+    total: (2 * rooms[0].price + 21_000) * 1.19,
+    issued_at: DateTime.now,
+    status: "issued"
+  },
+  {
+    reservation: reservations[1],
+    nights_subtotal: 3 * rooms[1].price,
+    services_subtotal: 25_000,
+    tax: 0.19 * (3 * rooms[1].price + 25_000),
+    total: (3 * rooms[1].price + 25_000) * 1.19,
+    issued_at: DateTime.now,
+    status: "draft"
+  },
+  {
+    reservation: reservations[2],
+    nights_subtotal: 3 * rooms[3].price,
+    services_subtotal: 10_000,
+    tax: 0.19 * (3 * rooms[3].price + 10_000),
+    total: (3 * rooms[3].price + 10_000) * 1.19,
+    issued_at: DateTime.now,
+    status: "issued"
+  },
+  {
+    reservation: reservations[3],
+    nights_subtotal: 3 * rooms[4].price,
+    services_subtotal: 30_000,
+    tax: 0.19 * (3 * rooms[4].price + 30_000),
+    total: (3 * rooms[4].price + 30_000) * 1.19,
+    issued_at: DateTime.now,
+    status: "draft"
+  }
 ])
