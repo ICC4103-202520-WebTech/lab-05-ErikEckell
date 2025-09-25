@@ -1,0 +1,9 @@
+<h1>Reservation <%= @reservation.code %></h1>
+
+<p><strong>Check-in:</strong> <%= @reservation.check_in %></p>
+<p><strong>Check-out:</strong> <%= @reservation.check_out %></p>
+<p><strong>Status:</strong> <%= @reservation.status %></p>
+<p><strong>Adults:</strong> <%= @reservation.adults %></p>
+<p><strong>Children:</strong> <%= @reservation.children %></p>
+
+<%= link_to "Back to all reservations", reservations_path %>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lab 5 — Associations & Validations
 
 ## Objective
@@ -22,3 +23,4 @@ Connect the database tables using proper associations and add basic validations.
 - Seed file adjusted to create valid associated records.
 
 
+=======

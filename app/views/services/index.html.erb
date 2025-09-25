@@ -1,0 +1,9 @@
+<h1>Services</h1>
+
+<ul>
+  <% @services.each do |service| %>
+    <li>
+      <%= link_to "#{service.name} - $#{service.price}", service_path(service) %>
+    </li>
+  <% end %>
+</ul>

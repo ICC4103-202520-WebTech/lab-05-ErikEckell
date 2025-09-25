@@ -1,0 +1,6 @@
+<h1><%= @service.name %></h1>
+
+<p><strong>Price:</strong> $<%= @service.price %></p>
+<p><strong>Active:</strong> <%= @service.is_active ? "Yes" : "No" %></p>
+
+<%= link_to "Back to all services", services_path %>

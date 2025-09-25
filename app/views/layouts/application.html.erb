@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Lab 03 V2 Erik Eckell" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# PWA manifest (opcional) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    
+  </head>
+
+  <body>
+    <!-- Menú de navegación global -->
+    <header>
+      <nav style="padding: 10px; background-color: #f2f2f2;">
+        <%= link_to "Rooms", rooms_path, style: "margin-right: 15px;" %>
+        <%= link_to "Guests", guests_path, style: "margin-right: 15px;" %>
+        <%= link_to "Reservations", reservations_path, style: "margin-right: 15px;" %>
+        <%= link_to "Services", services_path, style: "margin-right: 15px;" %>
+      </nav>
+      <hr>
+    </header>
+
+    <!-- Contenido principal -->
+    <main style="padding: 20px;">
+      <%= yield %>
+    </main>
+  </body>
+</html>
